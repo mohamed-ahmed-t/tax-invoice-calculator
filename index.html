@@ -4,50 +4,66 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Tax & Invoice Calculator</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
   <style>
     :root {
-      --bg-color: #f4f6f9;
+      --bg: #f1f5f9;
       --card-bg: #ffffff;
-      --text-main: #1f2937;
-      --text-muted: #6b7280;
+      --text-main: #0f172a;
+      --text-muted: #64748b;
       --primary: #2563eb;
       --primary-hover: #1d4ed8;
-      --border: #e5e7eb;
+      --primary-soft: #eff6ff;
+      --border: #e2e8f0;
       --accent-green: #059669;
+      --accent-green-soft: #ecfdf5;
       --accent-red: #dc2626;
+      --accent-red-soft: #fef2f2;
+      --radius: 14px;
+      --shadow: 0 4px 20px -4px rgba(15, 23, 42, 0.08);
+      --shadow-hover: 0 10px 30px -8px rgba(15, 23, 42, 0.12);
     }
 
     * {
       box-sizing: border-box;
       margin: 0;
       padding: 0;
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
     }
 
     body {
-      background-color: var(--bg-color);
+      background: linear-gradient(160deg, #f8fafc 0%, #e0f2fe 45%, #f1f5f9 100%);
       color: var(--text-main);
       min-height: 100vh;
       display: flex;
       flex-direction: column;
       align-items: center;
-      padding: 2rem 1rem;
+      padding: 2.5rem 1rem;
     }
 
     header {
       text-align: center;
-      margin-bottom: 2rem;
+      margin-bottom: 2.5rem;
+      max-width: 560px;
     }
 
     header h1 {
-      font-size: 1.875rem;
+      font-size: 2rem;
       font-weight: 700;
-      color: #111827;
+      letter-spacing: -0.025em;
+      background: linear-gradient(135deg, #1e40af, #3b82f6);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      margin-bottom: 0.4rem;
     }
 
     header p {
       color: var(--text-muted);
-      margin-top: 0.25rem;
+      font-size: 1.05rem;
+      line-height: 1.5;
     }
 
     .container {
@@ -55,7 +71,7 @@
       grid-template-columns: 1fr;
       gap: 1.5rem;
       width: 100%;
-      max-width: 900px;
+      max-width: 920px;
     }
 
     @media (min-width: 768px) {
@@ -65,46 +81,58 @@
     }
 
     .card {
-      background-color: var(--card-bg);
-      border-radius: 12px;
-      padding: 1.5rem;
-      box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03);
+      background: var(--card-bg);
+      border-radius: var(--radius);
+      padding: 1.75rem;
+      box-shadow: var(--shadow);
       border: 1px solid var(--border);
+      transition: box-shadow 0.25s ease;
+    }
+
+    .card:hover {
+      box-shadow: var(--shadow-hover);
     }
 
     .card-title {
-      font-size: 1.25rem;
+      font-size: 1.15rem;
       font-weight: 600;
-      margin-bottom: 1.25rem;
-      border-bottom: 2px solid var(--bg-color);
-      padding-bottom: 0.5rem;
+      margin-bottom: 1.4rem;
+      padding-bottom: 0.7rem;
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
     }
 
     .form-group {
-      margin-bottom: 1rem;
+      margin-bottom: 1.15rem;
     }
 
     label {
       display: block;
-      font-size: 0.875rem;
-      font-weight: 500;
-      margin-bottom: 0.375rem;
-      color: var(--text-main);
+      font-size: 0.8rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.03em;
+      margin-bottom: 0.4rem;
+      color: var(--text-muted);
     }
 
     input, select {
       width: 100%;
-      padding: 0.625rem;
+      padding: 0.7rem 0.85rem;
       border: 1px solid var(--border);
-      border-radius: 6px;
+      border-radius: 10px;
       font-size: 1rem;
+      color: var(--text-main);
+      background: #fff;
       outline: none;
-      transition: border-color 0.2s;
+      transition: border-color 0.2s, box-shadow 0.2s;
     }
 
-    input:focus {
+    input:focus, select:focus {
       border-color: var(--primary);
-      box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+      box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.15);
     }
 
     .input-mode-group {
@@ -117,80 +145,146 @@
     }
 
     .input-mode-group select {
-      width: auto;
-      min-width: 80px;
+      width: 95px;
+      flex-shrink: 0;
+    }
+
+    /* Receipt */
+    .receipt {
+      background: linear-gradient(180deg, #f8fafc 0%, #f1f5f9 100%);
+      border-radius: 12px;
+      padding: 1.15rem 1.25rem;
+      border: 1px dashed #cbd5e1;
+      margin-bottom: 1.25rem;
     }
 
     .receipt-row {
       display: flex;
       justify-content: space-between;
-      padding: 0.625rem 0;
-      border-bottom: 1px dashed var(--border);
+      align-items: center;
+      padding: 0.65rem 0;
+      border-bottom: 1px solid #e2e8f0;
       font-size: 0.95rem;
     }
 
-    .receipt-row:last-child {
+    .receipt-row:last-of-type {
       border-bottom: none;
     }
 
     .receipt-row.total {
-      border-top: 2px solid var(--text-main);
-      border-bottom: double 4px var(--text-main);
+      border-top: 2px solid #94a3b8;
+      margin-top: 0.35rem;
+      padding-top: 0.9rem;
       font-weight: 700;
-      font-size: 1.15rem;
-      margin-top: 0.5rem;
-      padding-top: 0.75rem;
+      font-size: 1.25rem;
+      color: #0ea5e9;
     }
 
-    .discount-text {
-      color: var(--accent-red);
-    }
-
-    .tax-text {
-      color: var(--accent-green);
-    }
+    .discount-text { color: var(--accent-red); }
+    .tax-text { color: var(--accent-green); }
 
     .badge {
       display: inline-block;
-      padding: 0.15rem 0.4rem;
-      font-size: 0.75rem;
-      border-radius: 4px;
-      background: var(--bg-color);
-      color: var(--text-muted);
-      margin-left: 0.25rem;
-    }
-
-    .copy-btn {
-      width: 100%;
-      margin-top: 1rem;
-      padding: 0.625rem;
-      background-color: var(--primary);
-      color: white;
-      border: none;
-      border-radius: 6px;
+      padding: 0.15rem 0.45rem;
+      font-size: 0.7rem;
       font-weight: 600;
-      cursor: pointer;
-      transition: background-color 0.2s;
+      border-radius: 6px;
+      background: #e0f2fe;
+      color: #0369a1;
+      margin-left: 0.35rem;
     }
 
-    .copy-btn:hover {
-      background-color: var(--primary-hover);
+    /* Proportion bar */
+    .breakdown-bar {
+      display: flex;
+      height: 9px;
+      border-radius: 5px;
+      overflow: hidden;
+      background: #e2e8f0;
+      margin: 1.1rem 0 0.4rem;
+    }
+
+    .bar-net {
+      background: linear-gradient(90deg, #3b82f6, #60a5fa);
+      transition: width 0.35s ease;
+    }
+
+    .bar-tax {
+      background: linear-gradient(90deg, #10b981, #34d399);
+      transition: width 0.35s ease;
+    }
+
+    .bar-legend {
+      display: flex;
+      justify-content: space-between;
+      font-size: 0.75rem;
+      color: var(--text-muted);
+      margin-bottom: 1.35rem;
     }
 
     .code-box {
-      background: #1e293b;
-      color: #f8fafc;
-      padding: 1rem;
-      border-radius: 8px;
-      font-family: monospace;
+      background: #0f172a;
+      color: #7dd3fc;
+      padding: 1rem 1.1rem;
+      border-radius: 10px;
+      font-family: 'SF Mono', 'Fira Code', ui-monospace, monospace;
       font-size: 0.85rem;
       overflow-x: auto;
-      margin-top: 1rem;
+      line-height: 1.5;
+      margin-bottom: 1rem;
+    }
+
+    .btn-stack {
+      display: flex;
+      flex-direction: column;
+      gap: 0.65rem;
+    }
+
+    .btn {
+      width: 100%;
+      padding: 0.75rem 1rem;
+      border-radius: 10px;
+      font-size: 0.95rem;
+      font-weight: 600;
+      border: none;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.4rem;
+    }
+
+    .btn-primary {
+      background: var(--primary);
+      color: white;
+      box-shadow: 0 2px 8px rgba(37, 99, 235, 0.25);
+    }
+
+    .btn-primary:hover {
+      background: var(--primary-hover);
+      transform: translateY(-1px);
+      box-shadow: 0 4px 12px rgba(37, 99, 235, 0.3);
+    }
+
+    .btn-secondary {
+      background: white;
+      color: var(--text-main);
+      border: 1px solid var(--border);
+    }
+
+    .btn-secondary:hover {
+      background: var(--primary-soft);
+      border-color: #93c5fd;
+      color: var(--primary);
+    }
+
+    .currency-select {
+      width: 130px;
     }
   </style>
 </head>
 <body>
-
   <header>
     <h1>Tax & Invoice Calculator</h1>
     <p>Calculate unit pricing, flexible discounts, and taxes seamlessly</p>
@@ -199,8 +293,18 @@
   <main class="container">
     <!-- Calculator Form -->
     <section class="card">
-      <h2 class="card-title">Invoice Inputs</h2>
-      
+      <h2 class="card-title">
+        Invoice Inputs
+        <div class="currency-select">
+          <select id="currency">
+            <option value="$">USD ($)</option>
+            <option value="€">EUR (€)</option>
+            <option value="£">GBP (£)</option>
+            <option value="E£">EGP (E£)</option>
+          </select>
+        </div>
+      </h2>
+
       <div class="form-group">
         <label for="quantity">Quantity (Q)</label>
         <input type="number" id="quantity" value="5" min="1" step="1">
@@ -217,7 +321,7 @@
           <input type="number" id="discount" value="10" min="0" step="0.01">
           <select id="discountType">
             <option value="%">%</option>
-            <option value="flat">Flat ($)</option>
+            <option value="flat">Flat</option>
           </select>
         </div>
       </div>
@@ -228,17 +332,17 @@
           <input type="number" id="tax" value="14" min="0" step="0.01">
           <select id="taxType">
             <option value="%">%</option>
-            <option value="flat">Flat ($)</option>
+            <option value="flat">Flat</option>
           </select>
         </div>
       </div>
     </section>
 
-    <!-- Visual Summary / Receipt -->
+    <!-- Visual Summary -->
     <section class="card">
       <h2 class="card-title">Calculated Summary</h2>
-      
-      <div id="receipt">
+
+      <div class="receipt" id="receipt">
         <div class="receipt-row">
           <span>Gross Subtotal</span>
           <span id="resGross">$0.00</span>
@@ -261,12 +365,24 @@
         </div>
       </div>
 
-      <!-- Quick Console Snippet Generator -->
+      <!-- Proportion Visualizer -->
+      <div class="breakdown-bar">
+        <div id="barNet" class="bar-net" style="width: 80%;"></div>
+        <div id="barTax" class="bar-tax" style="width: 20%;"></div>
+      </div>
+      <div class="bar-legend">
+        <span>Net</span>
+        <span>Tax</span>
+      </div>
+
       <div class="code-box" id="consoleCode">
-        // Live console expression:
         calculateInvoice(5, 100, "10%", "14%");
       </div>
-      <button class="copy-btn" id="copyBtn">Copy Function Code for Console</button>
+
+      <div class="btn-stack">
+        <button class="btn btn-primary" id="copyBtn">Copy Function Code</button>
+        <button class="btn btn-secondary" id="copySummaryBtn">Copy Plaintext Summary</button>
+      </div>
     </section>
   </main>
 
@@ -275,7 +391,7 @@
     function calculateInvoice(Q, P, discount = 0, tax = 0) {
       const grossSubtotal = Q * P;
 
-      // Calculate Discount
+      // Discount
       let discountAmount = 0;
       let discountLabel = "0";
       if (typeof discount === "string" && discount.trim().endsWith("%")) {
@@ -284,12 +400,12 @@
         discountLabel = `${rate}%`;
       } else {
         discountAmount = parseFloat(discount) || 0;
-        discountLabel = `Flat ${discountAmount.toFixed(2)}`;
+        discountLabel = `Flat`;
       }
 
       const netTaxable = Math.max(0, grossSubtotal - discountAmount);
 
-      // Calculate Tax
+      // Tax
       let vatAmount = 0;
       let taxLabel = "0";
       if (typeof tax === "string" && tax.trim().endsWith("%")) {
@@ -298,7 +414,7 @@
         taxLabel = `${rate}%`;
       } else {
         vatAmount = parseFloat(tax) || 0;
-        taxLabel = `Flat ${vatAmount.toFixed(2)}`;
+        taxLabel = `Flat`;
       }
 
       const grandTotal = netTaxable + vatAmount;
@@ -316,13 +432,14 @@
       };
     }
 
-    // UI Binding & Real-time Update
-    const inputs = ['quantity', 'price', 'discount', 'discountType', 'tax', 'taxType'];
-    
+    // UI Binding
+    const inputs = ['quantity', 'price', 'discount', 'discountType', 'tax', 'taxType', 'currency'];
+
     function updateUI() {
       const Q = parseFloat(document.getElementById('quantity').value) || 0;
       const P = parseFloat(document.getElementById('price').value) || 0;
-      
+      const curr = document.getElementById('currency').value;
+
       const rawDisc = parseFloat(document.getElementById('discount').value) || 0;
       const discType = document.getElementById('discountType').value;
       const discountParam = discType === '%' ? `${rawDisc}%` : rawDisc;
@@ -333,9 +450,9 @@
 
       const data = calculateInvoice(Q, P, discountParam, taxParam);
 
-      // Render Results
-      const fmt = (num) => '$' + num.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
-      
+      const fmt = (num) =>
+        curr + num.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+
       document.getElementById('resGross').innerText = fmt(data.grossSubtotal);
       document.getElementById('resDisc').innerText = `-${fmt(data.discountAmount)}`;
       document.getElementById('resDiscBadge').innerText = data.discountApplied;
@@ -344,25 +461,56 @@
       document.getElementById('resTaxBadge').innerText = data.taxApplied;
       document.getElementById('resTotal').innerText = fmt(data.grandTotal);
 
-      // Render Code Box
+      // Proportion bar
+      const grand = data.grandTotal || 1;
+      const netPct = (data.netTaxable / grand) * 100;
+      const taxPct = (data.vatAmount / grand) * 100;
+      document.getElementById('barNet').style.width = `${netPct}%`;
+      document.getElementById('barTax').style.width = `${taxPct}%`;
+
+      // Code snippet
       const discArg = discType === '%' ? `"${rawDisc}%"` : rawDisc;
       const taxArg = taxType === '%' ? `"${rawTax}%"` : rawTax;
-      document.getElementById('consoleCode').innerText = `calculateInvoice(${Q}, ${P}, ${discArg}, ${taxArg});`;
+      document.getElementById('consoleCode').innerText =
+        `calculateInvoice(${Q}, ${P}, ${discArg}, ${taxArg});`;
     }
 
-    // Event Listeners for real-time calculation
+    // Event listeners
     inputs.forEach(id => {
-      document.getElementById(id).addEventListener('input', updateUI);
-      document.getElementById(id).addEventListener('change', updateUI);
+      const el = document.getElementById(id);
+      el.addEventListener('input', updateUI);
+      el.addEventListener('change', updateUI);
     });
 
-    // Copy snippet button functionality
+    // Copy Function Code
     document.getElementById('copyBtn').addEventListener('click', () => {
       const functionString = calculateInvoice.toString();
       navigator.clipboard.writeText(functionString).then(() => {
         const btn = document.getElementById('copyBtn');
-        btn.innerText = "Copied Function to Clipboard!";
-        setTimeout(() => btn.innerText = "Copy Function Code for Console", 2000);
+        const original = btn.innerText;
+        btn.innerText = "Copied!";
+        setTimeout(() => (btn.innerText = original), 1800);
+      });
+    });
+
+    // Copy Plaintext Summary
+    document.getElementById('copySummaryBtn').addEventListener('click', () => {
+      const summary = `
+INVOICE SUMMARY
+------------------------
+Gross Subtotal : ${document.getElementById('resGross').innerText}
+Discount       : ${document.getElementById('resDisc').innerText}
+Net Taxable    : ${document.getElementById('resNet').innerText}
+Tax / VAT      : ${document.getElementById('resTax').innerText}
+------------------------
+Grand Total    : ${document.getElementById('resTotal').innerText}
+      `.trim();
+
+      navigator.clipboard.writeText(summary).then(() => {
+        const btn = document.getElementById('copySummaryBtn');
+        const original = btn.innerText;
+        btn.innerText = "Copied!";
+        setTimeout(() => (btn.innerText = original), 1800);
       });
     });
 
