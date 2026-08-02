@@ -9,29 +9,34 @@
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
   <style>
     :root {
-      --bg: #0f172a;
-      --card-bg: #1e293b;
-      --card-border: #334155;
-      --text-main: #f8fafc;
-      --text-muted: #94a3b8;
+      --bg: #f8fafc;
+      --card-bg: #ffffff;
+      --card-border: #e2e8f0;
+      --text-main: #1e293b;
+      --text-muted: #64748b;
       --primary: #3b82f6;
       --primary-hover: #2563eb;
+      --primary-soft: #eff6ff;
       --accent-green: #10b981;
+      --accent-green-soft: #ecfdf5;
       --accent-red: #f43f5e;
+      --accent-red-soft: #fff1f2;
       --accent-purple: #8b5cf6;
-      --input-bg: #0f172a;
-      --radius: 14px;
+      --input-bg: #f8fafc;
+      --radius: 16px;
+      --shadow: 0 4px 20px -4px rgba(15, 23, 42, 0.08);
+      --shadow-hover: 0 8px 30px -6px rgba(15, 23, 42, 0.12);
     }
 
     * {
       box-sizing: border-box;
       margin: 0;
       padding: 0;
-      font-family: 'Plus Jakarta Sans', -apple-system, sans-serif;
+      font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
     }
 
     body {
-      background-color: var(--bg);
+      background: linear-gradient(160deg, #f1f5f9 0%, #e0f2fe 50%, #f8fafc 100%);
       color: var(--text-main);
       min-height: 100vh;
       padding: 2.5rem 1rem;
@@ -42,35 +47,38 @@
 
     header {
       text-align: center;
-      margin-bottom: 2.5rem;
-      max-width: 600px;
+      margin-bottom: 2.75rem;
+      max-width: 640px;
     }
 
     header h1 {
-      font-size: 2.25rem;
+      font-size: 2.35rem;
       font-weight: 700;
-      background: linear-gradient(135deg, #60a5fa, #c084fc);
+      background: linear-gradient(135deg, #3b82f6, #8b5cf6);
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
-      margin-bottom: 0.5rem;
+      background-clip: text;
+      margin-bottom: 0.6rem;
+      letter-spacing: -0.02em;
     }
 
     header p {
       color: var(--text-muted);
-      font-size: 1rem;
+      font-size: 1.05rem;
+      line-height: 1.5;
     }
 
     .container {
       display: grid;
       grid-template-columns: 1fr;
-      gap: 2rem;
+      gap: 1.75rem;
       width: 100%;
-      max-width: 1100px;
+      max-width: 1120px;
     }
 
-    @media (min-width: 900px) {
+    @media (min-width: 920px) {
       .container {
-        grid-template-columns: 1.2fr 0.8fr;
+        grid-template-columns: 1.25fr 0.85fr;
       }
     }
 
@@ -78,67 +86,79 @@
       background-color: var(--card-bg);
       border: 1px solid var(--card-border);
       border-radius: var(--radius);
-      padding: 1.75rem;
-      box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.3);
+      padding: 1.85rem;
+      box-shadow: var(--shadow);
+      transition: box-shadow 0.25s ease;
+    }
+
+    .card:hover {
+      box-shadow: var(--shadow-hover);
     }
 
     .card-header {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      margin-bottom: 1.5rem;
-      padding-bottom: 0.75rem;
+      margin-bottom: 1.4rem;
+      padding-bottom: 0.85rem;
       border-bottom: 1px solid var(--card-border);
     }
 
     .card-title {
-      font-size: 1.25rem;
+      font-size: 1.2rem;
       font-weight: 600;
+      color: var(--text-main);
     }
 
     .items-list {
       display: flex;
       flex-direction: column;
-      gap: 1rem;
-      margin-bottom: 1.5rem;
+      gap: 0.9rem;
+      margin-bottom: 1.4rem;
     }
 
     .item-row {
       display: grid;
       grid-template-columns: 2fr 1fr 1.2fr auto;
       gap: 0.75rem;
-      align-items: center;
-      background: rgba(15, 23, 42, 0.5);
-      padding: 0.75rem;
-      border-radius: 8px;
+      align-items: end;
+      background: var(--input-bg);
+      padding: 0.9rem;
+      border-radius: 12px;
       border: 1px solid var(--card-border);
+      transition: border-color 0.2s, background 0.2s;
+    }
+
+    .item-row:hover {
+      border-color: #cbd5e1;
+      background: #f1f5f9;
     }
 
     label {
       display: block;
-      font-size: 0.8rem;
+      font-size: 0.75rem;
       font-weight: 600;
       text-transform: uppercase;
-      letter-spacing: 0.05em;
+      letter-spacing: 0.04em;
       color: var(--text-muted);
-      margin-bottom: 0.35rem;
+      margin-bottom: 0.3rem;
     }
 
     input, select {
       width: 100%;
-      padding: 0.65rem 0.8rem;
-      background-color: var(--input-bg);
+      padding: 0.7rem 0.85rem;
+      background-color: #ffffff;
       border: 1px solid var(--card-border);
-      border-radius: 8px;
+      border-radius: 10px;
       color: var(--text-main);
       font-size: 0.95rem;
       outline: none;
-      transition: all 0.2s;
+      transition: border-color 0.2s, box-shadow 0.2s;
     }
 
     input:focus, select:focus {
       border-color: var(--primary);
-      box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.2);
+      box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.15);
     }
 
     .input-mode-group {
@@ -151,12 +171,13 @@
     }
 
     .input-mode-group select {
-      width: 90px;
+      width: 92px;
+      flex-shrink: 0;
     }
 
     .btn {
-      padding: 0.65rem 1.2rem;
-      border-radius: 8px;
+      padding: 0.7rem 1.25rem;
+      border-radius: 10px;
       font-size: 0.9rem;
       font-weight: 600;
       border: none;
@@ -164,115 +185,148 @@
       display: inline-flex;
       align-items: center;
       justify-content: center;
-      gap: 0.5rem;
+      gap: 0.45rem;
       transition: all 0.2s ease;
     }
 
     .btn-primary {
       background-color: var(--primary);
       color: white;
+      box-shadow: 0 2px 8px rgba(59, 130, 246, 0.25);
     }
 
     .btn-primary:hover {
       background-color: var(--primary-hover);
+      box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3);
+      transform: translateY(-1px);
     }
 
     .btn-secondary {
-      background-color: transparent;
+      background-color: #ffffff;
       border: 1px solid var(--card-border);
       color: var(--text-main);
     }
 
     .btn-secondary:hover {
-      background-color: rgba(255, 255, 255, 0.05);
+      background-color: var(--primary-soft);
+      border-color: #93c5fd;
+      color: var(--primary);
     }
 
     .btn-danger {
-      background-color: rgba(244, 63, 94, 0.15);
+      background-color: var(--accent-red-soft);
       color: var(--accent-red);
-      border: 1px solid rgba(244, 63, 94, 0.3);
-      padding: 0.65rem;
+      border: 1px solid #fecdd3;
+      padding: 0.7rem 0.85rem;
     }
 
     .btn-danger:hover {
       background-color: var(--accent-red);
       color: white;
+      border-color: var(--accent-red);
     }
 
-    /* Receipt Styling */
+    /* Receipt */
     .receipt {
-      background: #0f172a;
-      border-radius: 12px;
-      padding: 1.5rem;
-      border: 1px dashed var(--card-border);
+      background: linear-gradient(180deg, #f8fafc 0%, #f1f5f9 100%);
+      border-radius: 14px;
+      padding: 1.4rem 1.5rem;
+      border: 1px dashed #cbd5e1;
     }
 
     .receipt-row {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      padding: 0.75rem 0;
-      border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+      padding: 0.7rem 0;
+      border-bottom: 1px solid #e2e8f0;
       font-size: 0.95rem;
     }
 
-    .receipt-row.total {
-      border-top: 2px solid var(--card-border);
+    .receipt-row:last-of-type {
       border-bottom: none;
-      margin-top: 0.75rem;
+    }
+
+    .receipt-row.total {
+      border-top: 2px solid #cbd5e1;
+      margin-top: 0.5rem;
       padding-top: 1rem;
-      font-size: 1.25rem;
+      font-size: 1.3rem;
       font-weight: 700;
-      color: #38bdf8;
+      color: #0ea5e9;
     }
 
     .badge {
       display: inline-block;
-      padding: 0.2rem 0.5rem;
-      font-size: 0.75rem;
+      padding: 0.15rem 0.5rem;
+      font-size: 0.72rem;
+      font-weight: 600;
       border-radius: 6px;
-      background: rgba(255, 255, 255, 0.1);
-      margin-left: 0.5rem;
+      background: #e0f2fe;
+      color: #0369a1;
+      margin-left: 0.4rem;
     }
 
     .text-discount { color: var(--accent-red); }
     .text-tax { color: var(--accent-green); }
 
-    /* Visual Proportion Bar */
+    /* Proportion bar */
     .breakdown-bar {
       display: flex;
-      height: 8px;
-      border-radius: 4px;
+      height: 10px;
+      border-radius: 6px;
       overflow: hidden;
-      margin: 1.5rem 0;
-      background: var(--input-bg);
+      margin: 1.5rem 0 0.5rem;
+      background: #e2e8f0;
     }
 
-    .bar-net { background-color: var(--primary); }
-    .bar-tax { background-color: var(--accent-green); }
+    .bar-net { background: linear-gradient(90deg, #3b82f6, #60a5fa); }
+    .bar-tax { background: linear-gradient(90deg, #10b981, #34d399); }
+
+    .bar-legend {
+      display: flex;
+      justify-content: space-between;
+      font-size: 0.75rem;
+      color: var(--text-muted);
+      margin-bottom: 1.25rem;
+    }
 
     .code-box {
-      background: #090d16;
-      color: #38bdf8;
-      padding: 1rem;
-      border-radius: 8px;
-      font-family: monospace;
+      background: #0f172a;
+      color: #7dd3fc;
+      padding: 1rem 1.15rem;
+      border-radius: 12px;
+      font-family: 'SF Mono', 'Fira Code', ui-monospace, monospace;
       font-size: 0.85rem;
       overflow-x: auto;
-      border: 1px solid var(--card-border);
-      margin-top: 1rem;
+      border: 1px solid #1e293b;
+      margin-top: 0.5rem;
+      line-height: 1.5;
     }
 
     .button-stack {
       display: flex;
       flex-direction: column;
-      gap: 0.75rem;
-      margin-top: 1.25rem;
+      gap: 0.7rem;
+      margin-top: 1.1rem;
+    }
+
+    .currency-select {
+      width: 150px;
+    }
+
+    /* Soft accent for empty state feel */
+    .items-list:empty::after {
+      content: "No items yet — add one below";
+      display: block;
+      text-align: center;
+      color: var(--text-muted);
+      font-size: 0.9rem;
+      padding: 1.5rem;
     }
   </style>
 </head>
 <body>
-
   <header>
     <h1>Smart Tax & Invoice Calculator</h1>
     <p>Calculate dynamic invoice line items with percentage or flat discounts & taxes instantly.</p>
@@ -283,7 +337,7 @@
     <section class="card">
       <div class="card-header">
         <h2 class="card-title">Line Items</h2>
-        <div style="width: 140px;">
+        <div class="currency-select">
           <select id="currency">
             <option value="$">USD ($)</option>
             <option value="€">EUR (€)</option>
@@ -297,13 +351,15 @@
         <!-- Dynamic Items Will Render Here -->
       </div>
 
-      <button id="addItemBtn" class="btn btn-secondary" style="width: 100%; margin-bottom: 2rem;">+ Add Line Item</button>
+      <button id="addItemBtn" class="btn btn-secondary" style="width: 100%; margin-bottom: 1.75rem;">
+        + Add Line Item
+      </button>
 
       <div class="card-header">
         <h2 class="card-title">Adjustments</h2>
       </div>
 
-      <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
+      <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1.1rem;">
         <div>
           <label>Overall Discount</label>
           <div class="input-mode-group">
@@ -314,7 +370,6 @@
             </select>
           </div>
         </div>
-
         <div>
           <label>Tax / VAT Rate</label>
           <div class="input-mode-group">
@@ -362,6 +417,10 @@
         <div id="barNet" class="bar-net" style="width: 80%;"></div>
         <div id="barTax" class="bar-tax" style="width: 20%;"></div>
       </div>
+      <div class="bar-legend">
+        <span>Net</span>
+        <span>Tax</span>
+      </div>
 
       <div class="button-stack">
         <button class="btn btn-primary" id="copyConsoleBtn">Copy Console Execution Code</button>
@@ -384,7 +443,6 @@
       // 1. Discount calculation
       let discountAmount = 0;
       let discountLabel = "0";
-
       if (typeof discount === "string" && discount.trim().endsWith("%")) {
         const rate = parseFloat(discount) || 0;
         discountAmount = totalGross * (rate / 100);
@@ -393,13 +451,11 @@
         discountAmount = parseFloat(discount) || 0;
         discountLabel = `Flat`;
       }
-
       const netTaxable = Math.max(0, totalGross - discountAmount);
 
       // 2. Tax calculation
       let vatAmount = 0;
       let taxLabel = "0";
-
       if (typeof tax === "string" && tax.trim().endsWith("%")) {
         const rate = parseFloat(tax) || 0;
         vatAmount = netTaxable * (rate / 100);
@@ -408,7 +464,6 @@
         vatAmount = parseFloat(tax) || 0;
         taxLabel = `Flat`;
       }
-
       const grandTotal = netTaxable + vatAmount;
 
       return {
@@ -425,7 +480,6 @@
     function renderItems() {
       const container = document.getElementById('itemsContainer');
       container.innerHTML = '';
-
       items.forEach((item, index) => {
         const row = document.createElement('div');
         row.className = 'item-row';
@@ -442,13 +496,12 @@
             <label>Price (P)</label>
             <input type="number" min="0" step="0.01" value="${item.price}" oninput="updateItem(${index}, 'price', parseFloat(this.value) || 0)">
           </div>
-          <div style="align-self: flex-end;">
-            <button class="btn btn-danger" onclick="removeItem(${index})">✕</button>
+          <div style="align-self: end;">
+            <button class="btn btn-danger" onclick="removeItem(${index})" title="Remove item">✕</button>
           </div>
         `;
         container.appendChild(row);
       });
-
       updateCalculations();
     }
 
@@ -472,9 +525,8 @@
     function updateCalculations() {
       const curr = document.getElementById('currency').value;
       const fmt = (num) => `${curr}${num.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
-
       const totalGross = items.reduce((sum, item) => sum + (item.qty * item.price), 0);
-      
+
       const rawDisc = parseFloat(document.getElementById('globalDiscount').value) || 0;
       const discType = document.getElementById('discountType').value;
       const discParam = discType === '%' ? `${rawDisc}%` : rawDisc;
@@ -506,8 +558,9 @@
       const avgPrice = items.length ? (totalGross / totalQty) : 0;
       const discCode = discType === '%' ? `"${rawDisc}%"` : rawDisc;
       const taxCode = taxType === '%' ? `"${rawTax}%"` : rawTax;
-      
-      document.getElementById('consoleCode').innerText = `calculateInvoice(${totalQty}, ${avgPrice.toFixed(2)}, ${discCode}, ${taxCode});`;
+
+      document.getElementById('consoleCode').innerText =
+        `calculateInvoice(${totalQty}, ${avgPrice.toFixed(2)}, ${discCode}, ${taxCode});`;
     }
 
     // Event listeners
@@ -522,8 +575,9 @@
       const code = document.getElementById('consoleCode').innerText;
       navigator.clipboard.writeText(code);
       const btn = document.getElementById('copyConsoleBtn');
-      btn.innerText = "Copied to Clipboard!";
-      setTimeout(() => btn.innerText = "Copy Console Execution Code", 2000);
+      const original = btn.innerText;
+      btn.innerText = "Copied!";
+      setTimeout(() => btn.innerText = original, 1800);
     });
 
     document.getElementById('copySummaryBtn').addEventListener('click', () => {
@@ -539,8 +593,9 @@ Grand Total: ${document.getElementById('resTotal').innerText}
       `.trim();
       navigator.clipboard.writeText(summaryText);
       const btn = document.getElementById('copySummaryBtn');
-      btn.innerText = "Copied Summary!";
-      setTimeout(() => btn.innerText = "Copy Plaintext Summary", 2000);
+      const original = btn.innerText;
+      btn.innerText = "Copied!";
+      setTimeout(() => btn.innerText = original, 1800);
     });
 
     // Initialize
