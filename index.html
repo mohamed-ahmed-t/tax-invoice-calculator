@@ -3,108 +3,142 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Tax & Invoice Calculator</title>
+  <title>Smart Tax & Invoice Studio</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
   <style>
     :root {
-      --bg-color: #f4f6f9;
-      --card-bg: #ffffff;
-      --text-main: #1f2937;
-      --text-muted: #6b7280;
-      --primary: #2563eb;
-      --primary-hover: #1d4ed8;
-      --border: #e5e7eb;
-      --accent-green: #059669;
-      --accent-red: #dc2626;
+      --bg: #0f172a;
+      --card-bg: #1e293b;
+      --card-border: #334155;
+      --text-main: #f8fafc;
+      --text-muted: #94a3b8;
+      --primary: #3b82f6;
+      --primary-hover: #2563eb;
+      --accent-green: #10b981;
+      --accent-red: #f43f5e;
+      --accent-purple: #8b5cf6;
+      --input-bg: #0f172a;
+      --radius: 14px;
     }
 
     * {
       box-sizing: border-box;
       margin: 0;
       padding: 0;
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      font-family: 'Plus Jakarta Sans', -apple-system, sans-serif;
     }
 
     body {
-      background-color: var(--bg-color);
+      background-color: var(--bg);
       color: var(--text-main);
       min-height: 100vh;
+      padding: 2.5rem 1rem;
       display: flex;
       flex-direction: column;
       align-items: center;
-      padding: 2rem 1rem;
     }
 
     header {
       text-align: center;
-      margin-bottom: 2rem;
+      margin-bottom: 2.5rem;
+      max-width: 600px;
     }
 
     header h1 {
-      font-size: 1.875rem;
+      font-size: 2.25rem;
       font-weight: 700;
-      color: #111827;
+      background: linear-gradient(135deg, #60a5fa, #c084fc);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      margin-bottom: 0.5rem;
     }
 
     header p {
       color: var(--text-muted);
-      margin-top: 0.25rem;
+      font-size: 1rem;
     }
 
     .container {
       display: grid;
       grid-template-columns: 1fr;
-      gap: 1.5rem;
+      gap: 2rem;
       width: 100%;
-      max-width: 900px;
+      max-width: 1100px;
     }
 
-    @media (min-width: 768px) {
+    @media (min-width: 900px) {
       .container {
-        grid-template-columns: 1fr 1fr;
+        grid-template-columns: 1.2fr 0.8fr;
       }
     }
 
     .card {
       background-color: var(--card-bg);
-      border-radius: 12px;
-      padding: 1.5rem;
-      box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03);
-      border: 1px solid var(--border);
+      border: 1px solid var(--card-border);
+      border-radius: var(--radius);
+      padding: 1.75rem;
+      box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.3);
+    }
+
+    .card-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 1.5rem;
+      padding-bottom: 0.75rem;
+      border-bottom: 1px solid var(--card-border);
     }
 
     .card-title {
       font-size: 1.25rem;
       font-weight: 600;
-      margin-bottom: 1.25rem;
-      border-bottom: 2px solid var(--bg-color);
-      padding-bottom: 0.5rem;
     }
 
-    .form-group {
-      margin-bottom: 1rem;
+    .items-list {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .item-row {
+      display: grid;
+      grid-template-columns: 2fr 1fr 1.2fr auto;
+      gap: 0.75rem;
+      align-items: center;
+      background: rgba(15, 23, 42, 0.5);
+      padding: 0.75rem;
+      border-radius: 8px;
+      border: 1px solid var(--card-border);
     }
 
     label {
       display: block;
-      font-size: 0.875rem;
-      font-weight: 500;
-      margin-bottom: 0.375rem;
-      color: var(--text-main);
+      font-size: 0.8rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: var(--text-muted);
+      margin-bottom: 0.35rem;
     }
 
     input, select {
       width: 100%;
-      padding: 0.625rem;
-      border: 1px solid var(--border);
-      border-radius: 6px;
-      font-size: 1rem;
+      padding: 0.65rem 0.8rem;
+      background-color: var(--input-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 8px;
+      color: var(--text-main);
+      font-size: 0.95rem;
       outline: none;
-      transition: border-color 0.2s;
+      transition: all 0.2s;
     }
 
-    input:focus {
+    input:focus, select:focus {
       border-color: var(--primary);
-      box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+      box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.2);
     }
 
     .input-mode-group {
@@ -117,142 +151,204 @@
     }
 
     .input-mode-group select {
-      width: auto;
-      min-width: 80px;
+      width: 90px;
+    }
+
+    .btn {
+      padding: 0.65rem 1.2rem;
+      border-radius: 8px;
+      font-size: 0.9rem;
+      font-weight: 600;
+      border: none;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+      transition: all 0.2s ease;
+    }
+
+    .btn-primary {
+      background-color: var(--primary);
+      color: white;
+    }
+
+    .btn-primary:hover {
+      background-color: var(--primary-hover);
+    }
+
+    .btn-secondary {
+      background-color: transparent;
+      border: 1px solid var(--card-border);
+      color: var(--text-main);
+    }
+
+    .btn-secondary:hover {
+      background-color: rgba(255, 255, 255, 0.05);
+    }
+
+    .btn-danger {
+      background-color: rgba(244, 63, 94, 0.15);
+      color: var(--accent-red);
+      border: 1px solid rgba(244, 63, 94, 0.3);
+      padding: 0.65rem;
+    }
+
+    .btn-danger:hover {
+      background-color: var(--accent-red);
+      color: white;
+    }
+
+    /* Receipt Styling */
+    .receipt {
+      background: #0f172a;
+      border-radius: 12px;
+      padding: 1.5rem;
+      border: 1px dashed var(--card-border);
     }
 
     .receipt-row {
       display: flex;
       justify-content: space-between;
-      padding: 0.625rem 0;
-      border-bottom: 1px dashed var(--border);
+      align-items: center;
+      padding: 0.75rem 0;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.05);
       font-size: 0.95rem;
     }
 
-    .receipt-row:last-child {
-      border-bottom: none;
-    }
-
     .receipt-row.total {
-      border-top: 2px solid var(--text-main);
-      border-bottom: double 4px var(--text-main);
+      border-top: 2px solid var(--card-border);
+      border-bottom: none;
+      margin-top: 0.75rem;
+      padding-top: 1rem;
+      font-size: 1.25rem;
       font-weight: 700;
-      font-size: 1.15rem;
-      margin-top: 0.5rem;
-      padding-top: 0.75rem;
-    }
-
-    .discount-text {
-      color: var(--accent-red);
-    }
-
-    .tax-text {
-      color: var(--accent-green);
+      color: #38bdf8;
     }
 
     .badge {
       display: inline-block;
-      padding: 0.15rem 0.4rem;
+      padding: 0.2rem 0.5rem;
       font-size: 0.75rem;
-      border-radius: 4px;
-      background: var(--bg-color);
-      color: var(--text-muted);
-      margin-left: 0.25rem;
-    }
-
-    .copy-btn {
-      width: 100%;
-      margin-top: 1rem;
-      padding: 0.625rem;
-      background-color: var(--primary);
-      color: white;
-      border: none;
       border-radius: 6px;
-      font-weight: 600;
-      cursor: pointer;
-      transition: background-color 0.2s;
+      background: rgba(255, 255, 255, 0.1);
+      margin-left: 0.5rem;
     }
 
-    .copy-btn:hover {
-      background-color: var(--primary-hover);
+    .text-discount { color: var(--accent-red); }
+    .text-tax { color: var(--accent-green); }
+
+    /* Visual Proportion Bar */
+    .breakdown-bar {
+      display: flex;
+      height: 8px;
+      border-radius: 4px;
+      overflow: hidden;
+      margin: 1.5rem 0;
+      background: var(--input-bg);
     }
+
+    .bar-net { background-color: var(--primary); }
+    .bar-tax { background-color: var(--accent-green); }
 
     .code-box {
-      background: #1e293b;
-      color: #f8fafc;
+      background: #090d16;
+      color: #38bdf8;
       padding: 1rem;
       border-radius: 8px;
       font-family: monospace;
       font-size: 0.85rem;
       overflow-x: auto;
+      border: 1px solid var(--card-border);
       margin-top: 1rem;
+    }
+
+    .button-stack {
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+      margin-top: 1.25rem;
     }
   </style>
 </head>
 <body>
 
   <header>
-    <h1>Tax & Invoice Calculator</h1>
-    <p>Calculate unit pricing, flexible discounts, and taxes seamlessly</p>
+    <h1>Smart Tax & Invoice Calculator</h1>
+    <p>Calculate dynamic invoice line items with percentage or flat discounts & taxes instantly.</p>
   </header>
 
   <main class="container">
-    <!-- Calculator Form -->
+    <!-- Invoice Form -->
     <section class="card">
-      <h2 class="card-title">Invoice Inputs</h2>
-      
-      <div class="form-group">
-        <label for="quantity">Quantity (Q)</label>
-        <input type="number" id="quantity" value="5" min="1" step="1">
-      </div>
-
-      <div class="form-group">
-        <label for="price">Unit Price (P)</label>
-        <input type="number" id="price" value="100" min="0" step="0.01">
-      </div>
-
-      <div class="form-group">
-        <label for="discount">Discount (D)</label>
-        <div class="input-mode-group">
-          <input type="number" id="discount" value="10" min="0" step="0.01">
-          <select id="discountType">
-            <option value="%">%</option>
-            <option value="flat">Flat ($)</option>
+      <div class="card-header">
+        <h2 class="card-title">Line Items</h2>
+        <div style="width: 140px;">
+          <select id="currency">
+            <option value="$">USD ($)</option>
+            <option value="€">EUR (€)</option>
+            <option value="£">GBP (£)</option>
+            <option value="E£">EGP (E£)</option>
           </select>
         </div>
       </div>
 
-      <div class="form-group">
-        <label for="tax">Tax / VAT</label>
-        <div class="input-mode-group">
-          <input type="number" id="tax" value="14" min="0" step="0.01">
-          <select id="taxType">
-            <option value="%">%</option>
-            <option value="flat">Flat ($)</option>
-          </select>
+      <div id="itemsContainer" class="items-list">
+        <!-- Dynamic Items Will Render Here -->
+      </div>
+
+      <button id="addItemBtn" class="btn btn-secondary" style="width: 100%; margin-bottom: 2rem;">+ Add Line Item</button>
+
+      <div class="card-header">
+        <h2 class="card-title">Adjustments</h2>
+      </div>
+
+      <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
+        <div>
+          <label>Overall Discount</label>
+          <div class="input-mode-group">
+            <input type="number" id="globalDiscount" value="10" min="0" step="0.01">
+            <select id="discountType">
+              <option value="%">%</option>
+              <option value="flat">Flat</option>
+            </select>
+          </div>
+        </div>
+
+        <div>
+          <label>Tax / VAT Rate</label>
+          <div class="input-mode-group">
+            <input type="number" id="globalTax" value="14" min="0" step="0.01">
+            <select id="taxType">
+              <option value="%">%</option>
+              <option value="flat">Flat</option>
+            </select>
+          </div>
         </div>
       </div>
     </section>
 
-    <!-- Visual Summary / Receipt -->
+    <!-- Calculation Summary -->
     <section class="card">
-      <h2 class="card-title">Calculated Summary</h2>
-      
-      <div id="receipt">
+      <div class="card-header">
+        <h2 class="card-title">Invoice Summary</h2>
+      </div>
+
+      <div class="receipt">
         <div class="receipt-row">
           <span>Gross Subtotal</span>
           <span id="resGross">$0.00</span>
         </div>
-        <div class="receipt-row discount-text">
-          <span>Discount <span id="resDiscBadge" class="badge">-</span></span>
+        <div class="receipt-row text-discount">
+          <span>Discount <span id="resDiscBadge" class="badge">10%</span></span>
           <span id="resDisc">-$0.00</span>
         </div>
         <div class="receipt-row">
-          <span>Net Taxable Amount</span>
+          <span>Net Taxable</span>
           <span id="resNet">$0.00</span>
         </div>
-        <div class="receipt-row tax-text">
-          <span>Tax Amount <span id="resTaxBadge" class="badge">-</span></span>
+        <div class="receipt-row text-tax">
+          <span>Tax / VAT <span id="resTaxBadge" class="badge">14%</span></span>
           <span id="resTax">+$0.00</span>
         </div>
         <div class="receipt-row total">
@@ -261,52 +357,62 @@
         </div>
       </div>
 
-      <!-- Quick Console Snippet Generator -->
+      <!-- Proportion Visualizer -->
+      <div class="breakdown-bar">
+        <div id="barNet" class="bar-net" style="width: 80%;"></div>
+        <div id="barTax" class="bar-tax" style="width: 20%;"></div>
+      </div>
+
+      <div class="button-stack">
+        <button class="btn btn-primary" id="copyConsoleBtn">Copy Console Execution Code</button>
+        <button class="btn btn-secondary" id="copySummaryBtn">Copy Plaintext Summary</button>
+      </div>
+
       <div class="code-box" id="consoleCode">
-        // Live console expression:
         calculateInvoice(5, 100, "10%", "14%");
       </div>
-      <button class="copy-btn" id="copyBtn">Copy Function Code for Console</button>
     </section>
   </main>
 
   <script>
-    // Core Logic Engine
-    function calculateInvoice(Q, P, discount = 0, tax = 0) {
-      const grossSubtotal = Q * P;
+    // State management
+    let items = [
+      { description: "Item 1", qty: 5, price: 100 }
+    ];
 
-      // Calculate Discount
+    function calculateInvoice(totalGross, discount = 0, tax = 0) {
+      // 1. Discount calculation
       let discountAmount = 0;
       let discountLabel = "0";
+
       if (typeof discount === "string" && discount.trim().endsWith("%")) {
         const rate = parseFloat(discount) || 0;
-        discountAmount = grossSubtotal * (rate / 100);
+        discountAmount = totalGross * (rate / 100);
         discountLabel = `${rate}%`;
       } else {
         discountAmount = parseFloat(discount) || 0;
-        discountLabel = `Flat ${discountAmount.toFixed(2)}`;
+        discountLabel = `Flat`;
       }
 
-      const netTaxable = Math.max(0, grossSubtotal - discountAmount);
+      const netTaxable = Math.max(0, totalGross - discountAmount);
 
-      // Calculate Tax
+      // 2. Tax calculation
       let vatAmount = 0;
       let taxLabel = "0";
+
       if (typeof tax === "string" && tax.trim().endsWith("%")) {
         const rate = parseFloat(tax) || 0;
         vatAmount = netTaxable * (rate / 100);
         taxLabel = `${rate}%`;
       } else {
         vatAmount = parseFloat(tax) || 0;
-        taxLabel = `Flat ${vatAmount.toFixed(2)}`;
+        taxLabel = `Flat`;
       }
 
       const grandTotal = netTaxable + vatAmount;
 
       return {
-        quantity: Q,
-        unitPrice: P,
-        grossSubtotal,
+        grossSubtotal: totalGross,
         discountApplied: discountLabel,
         discountAmount,
         netTaxable,
@@ -316,58 +422,129 @@
       };
     }
 
-    // UI Binding & Real-time Update
-    const inputs = ['quantity', 'price', 'discount', 'discountType', 'tax', 'taxType'];
-    
-    function updateUI() {
-      const Q = parseFloat(document.getElementById('quantity').value) || 0;
-      const P = parseFloat(document.getElementById('price').value) || 0;
-      
-      const rawDisc = parseFloat(document.getElementById('discount').value) || 0;
-      const discType = document.getElementById('discountType').value;
-      const discountParam = discType === '%' ? `${rawDisc}%` : rawDisc;
+    function renderItems() {
+      const container = document.getElementById('itemsContainer');
+      container.innerHTML = '';
 
-      const rawTax = parseFloat(document.getElementById('tax').value) || 0;
+      items.forEach((item, index) => {
+        const row = document.createElement('div');
+        row.className = 'item-row';
+        row.innerHTML = `
+          <div>
+            <label>Item Name</label>
+            <input type="text" value="${item.description}" oninput="updateItem(${index}, 'description', this.value)">
+          </div>
+          <div>
+            <label>Qty (Q)</label>
+            <input type="number" min="1" value="${item.qty}" oninput="updateItem(${index}, 'qty', parseFloat(this.value) || 0)">
+          </div>
+          <div>
+            <label>Price (P)</label>
+            <input type="number" min="0" step="0.01" value="${item.price}" oninput="updateItem(${index}, 'price', parseFloat(this.value) || 0)">
+          </div>
+          <div style="align-self: flex-end;">
+            <button class="btn btn-danger" onclick="removeItem(${index})">✕</button>
+          </div>
+        `;
+        container.appendChild(row);
+      });
+
+      updateCalculations();
+    }
+
+    function updateItem(index, key, val) {
+      items[index][key] = val;
+      updateCalculations();
+    }
+
+    function addItem() {
+      items.push({ description: `Item ${items.length + 1}`, qty: 1, price: 50 });
+      renderItems();
+    }
+
+    function removeItem(index) {
+      if (items.length > 1) {
+        items.splice(index, 1);
+        renderItems();
+      }
+    }
+
+    function updateCalculations() {
+      const curr = document.getElementById('currency').value;
+      const fmt = (num) => `${curr}${num.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
+
+      const totalGross = items.reduce((sum, item) => sum + (item.qty * item.price), 0);
+      
+      const rawDisc = parseFloat(document.getElementById('globalDiscount').value) || 0;
+      const discType = document.getElementById('discountType').value;
+      const discParam = discType === '%' ? `${rawDisc}%` : rawDisc;
+
+      const rawTax = parseFloat(document.getElementById('globalTax').value) || 0;
       const taxType = document.getElementById('taxType').value;
       const taxParam = taxType === '%' ? `${rawTax}%` : rawTax;
 
-      const data = calculateInvoice(Q, P, discountParam, taxParam);
+      const result = calculateInvoice(totalGross, discParam, taxParam);
 
-      // Render Results
-      const fmt = (num) => '$' + num.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+      // Render summary
+      document.getElementById('resGross').innerText = fmt(result.grossSubtotal);
+      document.getElementById('resDisc').innerText = `-${fmt(result.discountAmount)}`;
+      document.getElementById('resDiscBadge').innerText = result.discountApplied;
+      document.getElementById('resNet').innerText = fmt(result.netTaxable);
+      document.getElementById('resTax').innerText = `+${fmt(result.vatAmount)}`;
+      document.getElementById('resTaxBadge').innerText = result.taxApplied;
+      document.getElementById('resTotal').innerText = fmt(result.grandTotal);
+
+      // Proportion bar
+      const grand = result.grandTotal || 1;
+      const netPct = (result.netTaxable / grand) * 100;
+      const taxPct = (result.vatAmount / grand) * 100;
+      document.getElementById('barNet').style.width = `${netPct}%`;
+      document.getElementById('barTax').style.width = `${taxPct}%`;
+
+      // Code console box update
+      const totalQty = items.reduce((s, i) => s + i.qty, 0);
+      const avgPrice = items.length ? (totalGross / totalQty) : 0;
+      const discCode = discType === '%' ? `"${rawDisc}%"` : rawDisc;
+      const taxCode = taxType === '%' ? `"${rawTax}%"` : rawTax;
       
-      document.getElementById('resGross').innerText = fmt(data.grossSubtotal);
-      document.getElementById('resDisc').innerText = `-${fmt(data.discountAmount)}`;
-      document.getElementById('resDiscBadge').innerText = data.discountApplied;
-      document.getElementById('resNet').innerText = fmt(data.netTaxable);
-      document.getElementById('resTax').innerText = `+${fmt(data.vatAmount)}`;
-      document.getElementById('resTaxBadge').innerText = data.taxApplied;
-      document.getElementById('resTotal').innerText = fmt(data.grandTotal);
-
-      // Render Code Box
-      const discArg = discType === '%' ? `"${rawDisc}%"` : rawDisc;
-      const taxArg = taxType === '%' ? `"${rawTax}%"` : rawTax;
-      document.getElementById('consoleCode').innerText = `calculateInvoice(${Q}, ${P}, ${discArg}, ${taxArg});`;
+      document.getElementById('consoleCode').innerText = `calculateInvoice(${totalQty}, ${avgPrice.toFixed(2)}, ${discCode}, ${taxCode});`;
     }
 
-    // Event Listeners for real-time calculation
-    inputs.forEach(id => {
-      document.getElementById(id).addEventListener('input', updateUI);
-      document.getElementById(id).addEventListener('change', updateUI);
+    // Event listeners
+    document.getElementById('addItemBtn').addEventListener('click', addItem);
+    ['globalDiscount', 'discountType', 'globalTax', 'taxType', 'currency'].forEach(id => {
+      document.getElementById(id).addEventListener('input', updateCalculations);
+      document.getElementById(id).addEventListener('change', updateCalculations);
     });
 
-    // Copy snippet button functionality
-    document.getElementById('copyBtn').addEventListener('click', () => {
-      const functionString = calculateInvoice.toString();
-      navigator.clipboard.writeText(functionString).then(() => {
-        const btn = document.getElementById('copyBtn');
-        btn.innerText = "Copied Function to Clipboard!";
-        setTimeout(() => btn.innerText = "Copy Function Code for Console", 2000);
-      });
+    // Copy buttons
+    document.getElementById('copyConsoleBtn').addEventListener('click', () => {
+      const code = document.getElementById('consoleCode').innerText;
+      navigator.clipboard.writeText(code);
+      const btn = document.getElementById('copyConsoleBtn');
+      btn.innerText = "Copied to Clipboard!";
+      setTimeout(() => btn.innerText = "Copy Console Execution Code", 2000);
     });
 
-    // Initial render
-    updateUI();
+    document.getElementById('copySummaryBtn').addEventListener('click', () => {
+      const summaryText = `
+INVOICE SUMMARY
+------------------------
+Gross Subtotal: ${document.getElementById('resGross').innerText}
+Discount: ${document.getElementById('resDisc').innerText}
+Net Taxable: ${document.getElementById('resNet').innerText}
+Tax / VAT: ${document.getElementById('resTax').innerText}
+------------------------
+Grand Total: ${document.getElementById('resTotal').innerText}
+      `.trim();
+      navigator.clipboard.writeText(summaryText);
+      const btn = document.getElementById('copySummaryBtn');
+      btn.innerText = "Copied Summary!";
+      setTimeout(() => btn.innerText = "Copy Plaintext Summary", 2000);
+    });
+
+    // Initialize
+    renderItems();
   </script>
 </body>
 </html>
